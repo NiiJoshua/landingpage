@@ -1,3 +1,3 @@
 # landingpage
 
-![Alt text](https://github.com/NiiJoshua/Twitter_eti/blob/main/Scram.png)
+![Alt text](https://github.com/NiiJoshua/landingpage/blob/main/Blue%20and%20Purple%20Casual%20Corporate%20App%20Development%20Startup%20Banner%20Landscape.png)
