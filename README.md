@@ -1,6 +1,6 @@
 # landingpage
 
 <p align = "center">
-<img src=”https://user-images.githubusercontent.com/45421930/147821037-54c4585f-17b5-42c8-8ff8-8afaaf977d33.png" alt=”my banner”>
+<img src=”https://github.com/NiiJoshua/landingpage/blob/main/Blue%20and%20Purple%20Casual%20Corporate%20App%20Development%20Startup%20Banner%20Landscape.png" alt=”my banner”>
 
 </p>
