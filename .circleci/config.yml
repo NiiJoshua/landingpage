@@ -4,19 +4,16 @@ version: 2.1
 
 # Define a job to be invoked later in a workflow.
 orbs:
+
+commands:
+  destroy_environment:
+    steps:
+      - run: 
+          name: Destroy environment
+          command: |
+            aws cloudformation delete-stack --stack-name circleci-${CIRCLE_WORKFLOW_ID:0:5}
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  myjob1:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-      - run: echo "Hello world"
-
   create_infrastructure: 
     docker:
       - image: amazon/aws-cli
@@ -27,8 +24,11 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file template.yml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --stack-name circeci-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-east-1
+      - run: return 1
+      - destroy_environment
+        when: on_fail
 
   configure_infrastructure: 
     docker:
@@ -49,20 +49,14 @@ jobs:
 
   smoke_test:
     docker:
-      - image: alpine:test
+      - image: alpine:latest
     steps:
-      - run: apk add --update curl
       - run:
-          name: smoke test
-          command: |
-            URL="https://blog.udacity.com/"
-            # test if website exists
-            if curl -s --head ${URL}
-            then
-              return 0
-            else 
-              return 1
-            fi
+          name: Test job
+          command: return 1
+      - destroy_environment
+        
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
